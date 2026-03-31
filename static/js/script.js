@@ -4,23 +4,29 @@ Lógica: Si el monto es mayor a $70.000, el descuento es del 15%. Si es menor, e
 Regla: La Función Principal debe mostrar el total a pagar con un signo de peso ($). */
 
 function moduloTesoreria() {
-    let pago = pagosPermisos(permiso)
-    let monto = parseFloat(input.value)
-    const container = document.getElementById("Container1");
-    const result = document.getElementById("result1");
-    const input = document.getElementById("input1");
+    let valor = document.getElementById("input1").value;
+    let numero = parseFloat(valor);
+    let resultado = document.getElementById("result1");
+    let contenedor = document.getElementById("container1");
+    contenedor.classList.remove("d-none");
+    if (isNaN(numero)) {
+        resultado.textContent = "Por favor ingresa un número válido";
+        return;
+    }
+    let porcentaje = calcularMonto(numero);
+    resultado.textContent = `Resultado: ${porcentaje} $`;
 
-    let descuento = 0;
-
-    if (pago > 70000) {
-        descuento = pago * 0.15; // 15% de descuento
-    } else {
-        descuento = pago * 0.05; // 5% de descuento
+}
+function calcularMonto(numero) {
+    if (numero > 70000) {
+        return numero * 0.85;
+    }
+    else {
+        return numero * 0.95;
     }
 
-    let total = pago - descuento;
-    alert(`Su monto a pagar es de $${total}`);
 }
+
 
 /* 2. Módulo de Salud: Fila de Vacunación (Arreglos y Prioridad)
 Gestión de nombres en la fila de espera del consultorio local.
@@ -55,7 +61,7 @@ function agregarLista(nombre) {
     return pacientes.join(", ");
 };
 
-function ejercicio_02() {
+function paraAgregar() {
     const container = document.getElementById("container2");
     const result = document.getElementById("result2");
     const input = document.getElementById("input2");
@@ -64,4 +70,44 @@ function ejercicio_02() {
     result.textContent = resultado;
     input.value = "";
     container.classList.remove("d-none");
-}; 
+};
+
+/* 3. Módulo de Subsidios: Buscador de Beneficiarios (Ciclos e If)
+Verificar si un RUT o nombre está en el listado de entrega de beneficios.
+Lógica: Tener un arreglo con al menos 6 nombres. Usar un ciclo for para buscar si el dato ingresado existe en la lista.
+Regla: La función debe devolver "Beneficiario Verificado" o "No registrado".
+ */
+
+function buscarBeneficios() {
+    const beneficiarios = ["Juan", "Maria", "Carlos", "Luis", "Diego", "Jonathin"];
+    const input = document.getElementById("input3");
+    const container = document.getElementById("container3");
+    const result = document.getElementById("result3");
+    const nombreBuscado = input.value;
+    let encontrado = false;
+
+    for (let i = 0; i < beneficiarios.length; i++) {
+        if (beneficiarios[i].toLowerCase() === nombreBuscado.toLowerCase()) {
+            encontrado = true;
+            break;
+        }
+    };
+
+    for (let i = 0; i < beneficiarios.length; i++) {
+        if (beneficiarios[i].toLowerCase() === nombreBuscado.toLowerCase()) {
+            encontrado = true;
+            break;
+        }
+
+    }
+
+    if (encontrado) {
+        result.textContent = "Beneficiario Verificado";
+        result.className = "alert alert-success fw-bold";
+    } else {
+        result.textContent = "No registrado";
+        result.className = "alert alert-danger fw-bold";
+    }
+
+    container.classList.remove("d-none");
+}
